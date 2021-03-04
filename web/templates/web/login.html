@@ -1,0 +1,92 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword" content="">
+    <meta name="author" content="" />
+    <!-- Page Title -->
+    <title>Log In | Drone Dashboard</title>
+    <!-- Main CSS -->
+    <link type="text/css" rel="stylesheet" href={% static "web/assets/plugins/bootstrap/css/bootstrap.min.css" %} />
+    <link type="text/css" rel="stylesheet" href={% static "web/assets/plugins/font-awesome/css/font-awesome.min.css" %} />
+    <link type="text/css" rel="stylesheet" href={% static "web/assets/plugins/simple-line-icons/css/simple-line-icons.css" %}>
+    <link type="text/css" rel="stylesheet" href={% static "web/assets/plugins/ionicons/css/ionicons.css" %}>
+    <link type="text/css" rel="stylesheet" href={% static "web/assets/css/app.min.css" %} />
+    <link type="text/css" rel="stylesheet" href={% static "web/assets/css/style.min.css" %} />
+    <!-- Favicon -->
+    <link rel="icon" href={% static "web/assets/images/favicon.ico" %} type="image/x-icon">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+<body>
+    <!--================================-->
+    <!-- User Singin Start -->
+    <!--================================-->
+    <div class="ht-100v d-flex">
+        <div class="card shadow-none pd-20 mx-auto wd-300 text-center bd-1 align-self-center">
+            <h4 class="card-title mt-3 text-center">Sing In</h4>
+            <p class="text-center">Sing in to your account</p>
+
+            <p class="divider-text">
+                <span class="bg-light">OR</span>
+            </p>
+            <form method="post" action="#">
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pd-x-9"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    {{form.name}}
+                </div>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    {{form.password}}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" id="submit" class="btn btn-custom-primary btn-block tx-13 hover-white"> Login </button>
+                </div>
+                {%if message%}
+                {{message}}
+                {%endif%}
+                
+
+            </form>
+        </div>
+    </div>
+
+
+    <br>
+    <br>
+
+    <!--/ User Singin End -->
+    <!--================================-->
+    <!-- Footer Script -->
+    <!--================================-->
+    <script src={% static "web/assets/plugins/jquery/jquery.min.js" %}></script>
+    <script src={% static "web/assets/plugins/jquery-ui/jquery-ui.js" %}></script>
+    <script src={% static "web/assets/plugins/popper/popper.js" %}></script>
+    <script src={% static "web/assets/plugins/bootstrap/js/bootstrap.min.js" %}></script>
+    <script src={% static "web/assets/plugins/pace/pace.min.js" %}></script>
+    <script src={% static "web/assets/js/jquery.slimscroll.min.js" %}></script>
+    <script src={% static "web/assets/js/custom.js" %}></script>
+
+
+
+
+</body>
+
+</html>
