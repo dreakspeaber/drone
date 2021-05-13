@@ -35,6 +35,9 @@ class signin(APIView):
 class logoutpg(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     def get(self, request):
+        drone = Drone.objects.get(user=self.request.user)
+        drone.active,drone.roll,drone.pitch,drone.yaw,drone.throttle = False,0,0,0,0
+        drone.save()
         logout(request)
         return redirect(reverse('signin'))
 
@@ -48,3 +51,36 @@ class dash(APIView):
         return render(request,'web/index.html')
 
 
+
+class connect(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    def post(self,request):
+        drone = Drone.objects.get(user=self.request.user)
+        drone.active = True
+        drone.save()
+        return Response({'status' : 200})
+
+
+
+
+class update(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    def post(self,request):
+        drone = Drone.objects.get(user=self.request.user)
+        drone.roll,drone.pitch,drone.yaw,drone.throttle=request.data['roll'],request.data['pitch'],request.data['yaw'],request.data['throttle']
+        drone.save()
+        return Response({'status' : 200})
+
+
+class getData(APIView):
+    def get(self,request,*args,**kwargs):
+        drone = Drone.objects.get(pk=self.kwargs['id'])
+        response = {
+            'roll' : drone.roll,
+            'pitch' : drone.pitch,
+            'yaw'   : drone.yaw,
+            'throttle' : drone.throttle,
+            'active' : drone.active
+        }
+
+        return Response(response)

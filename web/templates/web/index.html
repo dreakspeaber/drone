@@ -34,7 +34,7 @@ Drone Control
 
 <br><br>
 <div style=" width: 80px; position: absolute; left:10px; top:360px;">
-	<img src={% static 'web/images/joystick-base.png'>
+	<img src={% static 'web/images/joystick-base.png' %}>
 	<div id="stick1" style="position: absolute; left:32px; top:32px;">
 		<img src={% static 'web/images/joystick-blue.png' %}/>		
 	</div>
@@ -59,6 +59,28 @@ Drone Control
 	jQuery(document).ready(function () {
 		$("#connect").click(function(){
 			$("#status").html("Status : Drone offline")
+			$.ajax({
+                    headers: {
+                        "X-CSRFToken": token
+                    },
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "/connect",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    async: true,
+
+                    success: function(data) {
+                        $("#status").html("Status : Connection to database initiated")
+                    },
+                    error: function(e) {
+                        $("#status").html("Status : Cannot initiate")
+                    }
+
+       })
 
 		})
 	})
@@ -159,7 +181,9 @@ class JoystickController
 		    const xPercent = parseFloat((xPosition2 / maxDistance).toFixed(4));
 		    const yPercent = parseFloat((yPosition2 / maxDistance).toFixed(4));
 		    
-		    self.value = { x: xPercent, y: yPercent };
+			self.value = { x: xPercent, y: yPercent };
+			self.x = xPercent;
+			self.y = yPercent;
 		  }
 
 		function handleUp(event) 
@@ -176,7 +200,7 @@ class JoystickController
 		    // reset everything
 		    self.value = { x: 0, y: 0 };
 		    self.touchId = null;
-		    self.active = false;
+			self.active = false;
 		}
 
 		stick.addEventListener('mousedown', handleDown);
@@ -195,6 +219,40 @@ function update()
 {
 	document.getElementById("status1").innerText = "Roll and Pitch  " + JSON.stringify(joystick1.value);
 	document.getElementById("status2").innerText = "Yaw and Throttle " + JSON.stringify(joystick2.value);
+
+
+
+
+	var data = {
+		'roll' : joystick1.x,
+		'pitch' : joystick1.y,
+		'yaw' : joystick2.x,
+		'throttle' : joystick2.y
+
+	};
+
+            $.ajax({
+                    headers: {
+                        "X-CSRFToken": token
+                    },
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "/update",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    async: true,
+
+                    success: function(data) {
+                    },
+                    error: function(e) {
+                        console.log("ERROR : ", e);
+                    }
+
+       })
+
 }
 
 function loop()
@@ -204,6 +262,8 @@ function loop()
 }
 
 loop();
+
+
 
 
 
